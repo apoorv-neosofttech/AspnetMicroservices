@@ -53,4 +53,3 @@ volumes:
   mongo_data:
   postgres_data:
   pgadmin_data:
-
