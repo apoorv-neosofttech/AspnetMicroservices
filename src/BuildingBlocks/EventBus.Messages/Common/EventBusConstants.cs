@@ -2,6 +2,6 @@
 {
     public class EventBusConstants
     {
-        public const string BasketCheckoutOptions = "basketcheckout-queue";
+        public const string BasketCheckoutQueue = "basketcheckout-queue";
     }
 }
