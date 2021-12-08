@@ -1,5 +1,4 @@
-﻿using System;
-namespace Ordering.Application.Models
+﻿namespace Ordering.Application.Models
 {
     public class Email
     {

@@ -2,7 +2,6 @@
 using Catalog.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -17,8 +16,8 @@ namespace Catalog.API.Controllers
         private readonly ILogger<CatalogController> _logger;
         public CatalogController(IProductRepository repository, ILogger<CatalogController> logger)
         {
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _repository = repository;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -35,23 +34,21 @@ namespace Catalog.API.Controllers
         public async Task<ActionResult<Product>> GetProductById(string id)
         {
             var product = await _repository.GetProduct(id);
-
             if (product == null)
             {
                 _logger.LogError($"Product with id: {id}, not found.");
                 return NotFound();
             }
-
             return Ok(product);
         }
 
-        [Route("[action]/{name}", Name = "GetProductByName")]
+        [Route("[action]/{name}", Name = "GetProductsByName")]
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(IEnumerable<Product>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByName(string name)
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByName(string name)
         {
-            var products = await _repository.GetProductByName(name);
+            var products = await _repository.GetProductsByName(name);
             if (products == null)
             {
                 _logger.LogError($"Products with name: {name} not found.");
@@ -60,13 +57,13 @@ namespace Catalog.API.Controllers
             return Ok(products);
         }
 
-        [Route("[action]/{category}", Name = "GetProductByCategory")]
+        [Route("[action]/{category}", Name = "GetProductsByCategory")]
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(IEnumerable<Product>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByCategory(string category)
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string category)
         {
-            var products = await _repository.GetProductByCategory(category);
+            var products = await _repository.GetProductsByCategory(category);
             if (products == null)
             {
                 _logger.LogError($"Products with name: {category} not found.");
@@ -80,7 +77,6 @@ namespace Catalog.API.Controllers
         public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
         {
             await _repository.CreateProduct(product);
-
             return CreatedAtRoute("GetProduct", new { id = product.Id }, product);
         }
 

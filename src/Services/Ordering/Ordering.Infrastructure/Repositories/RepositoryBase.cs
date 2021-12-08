@@ -15,7 +15,7 @@ namespace Ordering.Infrastructure.Repositories
         protected readonly OrderContext _dbContext;
         public RepositoryBase(OrderContext dbContext)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _dbContext = dbContext;
         }
 
         public async Task<IReadOnlyList<T>> GetAllAsync()

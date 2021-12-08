@@ -4,9 +4,6 @@ using Discount.Grpc.Protos;
 using Discount.Grpc.Repositories.Interfaces;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Discount.Grpc.Services
@@ -19,9 +16,9 @@ namespace Discount.Grpc.Services
 
         public DiscountService(IDiscountRepository repository, ILogger<DiscountService> logger, IMapper mapper)
         {
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _repository = repository;
+            _logger = logger;
+            _mapper = mapper;
         }
 
         public override async Task<CouponModel> GetDiscount(GetDiscountRequest request, ServerCallContext context)

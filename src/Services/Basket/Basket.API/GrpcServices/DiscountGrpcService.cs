@@ -1,5 +1,4 @@
 ﻿using Discount.Grpc.Protos;
-using System;
 using System.Threading.Tasks;
 
 namespace Basket.API.GrpcServices
@@ -10,7 +9,7 @@ namespace Basket.API.GrpcServices
 
         public DiscountGrpcService(DiscountProtoService.DiscountProtoServiceClient discountProtoService)
         {
-            _discountProtoService = discountProtoService ?? throw new ArgumentNullException(nameof(discountProtoService));
+            _discountProtoService = discountProtoService;
         }
 
         public async Task<CouponModel> GetDiscount(string productName)
